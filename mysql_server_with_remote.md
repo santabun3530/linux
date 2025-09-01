@@ -170,7 +170,7 @@ mysql -h <VM_IP> -u myuser -p
 
 ## 📂 Useful Paths
 
-* Config → `/etc/mysql/mysql.conf.d/mysqld.cnf`
+* Config → `/etc/mysql/mysql.conf.d/remote.cnf`
 * Data directory → `/var/lib/mysql/`
 * Logs → `/var/log/mysql/`
 
