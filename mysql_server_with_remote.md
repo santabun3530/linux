@@ -181,10 +181,10 @@ mysql -h <VM_IP> -u myuser -p
 ```mermaid
 flowchart TD
     %% --- Local VM Login ---
-    A[User on VM] -->|sudo mysql| B[(MySQL Server)]
+    A[User on VM] -->|sudo mysql| B[MySQL Server]
     A -->|mysql -u root -p| C{Authentication Method}
 
-    C -->|auth_socket (default)| D[✔ Login without password<br/>only if sudo user]
+    C -->|auth_socket default| D[✔ Login without password<br/>only if sudo user]
     C -->|mysql_native_password| E[✔ Login with password<br/>root / myuser]
 
     %% --- Remote Access from Local Machine ---
@@ -192,7 +192,7 @@ flowchart TD
 
     %% --- Database Layer ---
     B --> F[Database mydb]
-    F --> G[(Tables & Data)]
+    F --> G[Tables & Data]
 
     %% --- Local VM Root Access to DB ---
     B --> VM_Local[Local Login on VM]
