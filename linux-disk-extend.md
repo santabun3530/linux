@@ -1,3 +1,4 @@
+```
 You’re already using ext4 on /dev/vda1 👍
 So you don’t need to change filesystem — just expand it to full 250GB.
 
@@ -49,4 +50,4 @@ ext4 ✔
 You just need:
 
 Expand partition → growpart
-Expand filesystem → resize2fs
+Expand filesystem → resize2fs```
