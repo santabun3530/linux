@@ -3,7 +3,7 @@ You’re already using ext4 on /dev/vda1 👍
 So you don’t need to change filesystem — just expand it to full 250GB.
 
 Right now:
-
+======================================
 Disk: vda → 250G
 Partition: vda1 → 50G
 Filesystem: ext4 ✅
@@ -11,18 +11,26 @@ Filesystem: ext4 ✅
 1. Install growpart (if not installed)
 apt update
 apt install cloud-guest-utils -y
+===========================================
+
 2. Expand partition to full disk
 growpart /dev/vda 1
 
 👉 This will increase vda1 from 50G → 250G
+
+============================================
 
 3. Resize ext4 filesystem
 resize2fs /dev/vda1
 
 👉 This expands ext4 to use full partition
 
+=============================================
+
 4. Verify
 df -h
+
+============================================
 
 Expected:
 
