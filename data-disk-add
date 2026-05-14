@@ -1,0 +1,159 @@
+# Separate 20GB Disk Mount on `/data`
+
+This guide explains how to mount a separate 20GB disk on `/data` in Ubuntu/Linux without affecting the OS filesystem.
+
+---
+
+## Current Disk Layout
+
+```bash
+lsblk
+```
+
+Example:
+
+```text
+sda   -> OS Disk
+sdb   -> Separate 20GB Data Disk
+```
+## If the disk is completely empty and no `/dev/sdb1` exists:
+
+```bash
+sudo fdisk /dev/sdb
+```
+
+Inside fdisk:
+
+```text
+n
+p
+1
+ENTER
+ENTER
+w
+```
+---
+
+# Step 1: Check Available Disks
+
+```bash
+lsblk
+```
+
+Verify the extra disk exists:
+
+```text
+sdb    20G
+└─sdb1 20G
+```
+
+---
+
+# Step 2: Format the Partition
+
+Format `/dev/sdb1` with ext4 filesystem:
+
+```bash
+sudo mkfs.ext4 /dev/sdb1
+```
+
+---
+
+# Step 3: Create Mount Directory
+
+```bash
+sudo mkdir -p /data
+```
+
+---
+
+# Step 4: Mount the Disk
+
+```bash
+sudo mount /dev/sdb1 /data
+```
+
+Verify:
+
+```bash
+df -hT
+```
+
+Expected output:
+
+```text
+/dev/sdb1   ext4   20G   ...   /data
+```
+
+---
+
+# Step 5: Get UUID
+
+```bash
+sudo blkid /dev/sdb1
+```
+
+Example output:
+
+```text
+UUID="9729dd29-bd71-4608-bf18-bf5942991dad"
+```
+
+---
+
+# Step 6: Configure Persistent Mount
+
+Edit fstab:
+
+```bash
+sudo nano /etc/fstab
+```
+
+Add this line:
+
+```text
+UUID=9729dd29-bd71-4608-bf18-bf5942991dad   /data   ext4   defaults,nofail   0   2
+```
+
+Save and exit.
+
+---
+
+# Step 7: Verify fstab Configuration
+
+```bash
+sudo mount -a
+```
+
+If no error appears, configuration is successful.
+
+---
+
+# Final Verification
+
+```bash
+df -hT
+```
+
+Expected:
+
+```text
+Filesystem   Type   Size  Used Avail Use% Mounted on
+/dev/sdb1    ext4    20G   24K   19G   1% /data
+```
+
+---
+## Must be check reboot
+# Result
+
+- `/data` is now a separate storage volume
+- OS filesystem remains isolated
+- Data persists after reboot
+- Suitable for:
+  - Application data
+  - Backups
+  - Uploads
+  - Database storage
+  - Logs
+
+---
